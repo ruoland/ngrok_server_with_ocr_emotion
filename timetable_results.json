@@ -1,0 +1,383 @@
+[
+    {
+        "row": 0,
+        "col": 0,
+        "coordinates": [
+            10,
+            104,
+            112,
+            162
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 0,
+        "col": 1,
+        "coordinates": [
+            112,
+            104,
+            200,
+            162
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 0,
+        "col": 2,
+        "coordinates": [
+            200,
+            104,
+            287,
+            162
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 0,
+        "col": 3,
+        "coordinates": [
+            287,
+            104,
+            375,
+            162
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 0,
+        "col": 4,
+        "coordinates": [
+            375,
+            104,
+            477,
+            162
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 0,
+        "col": 5,
+        "coordinates": [
+            477,
+            104,
+            565,
+            162
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 1,
+        "col": 0,
+        "coordinates": [
+            10,
+            162,
+            112,
+            223
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 1,
+        "col": 1,
+        "coordinates": [
+            112,
+            162,
+            200,
+            223
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 1,
+        "col": 2,
+        "coordinates": [
+            200,
+            162,
+            287,
+            223
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 1,
+        "col": 3,
+        "coordinates": [
+            287,
+            162,
+            375,
+            223
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 1,
+        "col": 4,
+        "coordinates": [
+            375,
+            162,
+            477,
+            223
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 1,
+        "col": 5,
+        "coordinates": [
+            477,
+            162,
+            565,
+            223
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 2,
+        "col": 0,
+        "coordinates": [
+            10,
+            223,
+            112,
+            281
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 2,
+        "col": 1,
+        "coordinates": [
+            112,
+            223,
+            200,
+            338
+        ],
+        "consecutive_rows": 2,
+        "is_virtual": false
+    },
+    {
+        "row": 2,
+        "col": 2,
+        "coordinates": [
+            200,
+            223,
+            287,
+            399
+        ],
+        "consecutive_rows": 3,
+        "is_virtual": false
+    },
+    {
+        "row": 2,
+        "col": 3,
+        "coordinates": [
+            287,
+            223,
+            375,
+            399
+        ],
+        "consecutive_rows": 3,
+        "is_virtual": false
+    },
+    {
+        "row": 2,
+        "col": 4,
+        "coordinates": [
+            375,
+            223,
+            477,
+            338
+        ],
+        "consecutive_rows": 2,
+        "is_virtual": false
+    },
+    {
+        "row": 2,
+        "col": 5,
+        "coordinates": [
+            477,
+            223,
+            565,
+            281
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 3,
+        "col": 0,
+        "coordinates": [
+            10,
+            281,
+            112,
+            338
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 3,
+        "col": 1,
+        "coordinates": [
+            477,
+            281,
+            565,
+            338
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 3,
+        "col": 5,
+        "coordinates": null,
+        "consecutive_rows": 1,
+        "is_virtual": true
+    },
+    {
+        "row": 4,
+        "col": 0,
+        "coordinates": [
+            10,
+            338,
+            112,
+            399
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 4,
+        "col": 1,
+        "coordinates": [
+            112,
+            338,
+            200,
+            399
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 4,
+        "col": 2,
+        "coordinates": [
+            375,
+            338,
+            477,
+            399
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 4,
+        "col": 3,
+        "coordinates": [
+            477,
+            338,
+            565,
+            399
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 4,
+        "col": 4,
+        "coordinates": null,
+        "consecutive_rows": 1,
+        "is_virtual": true
+    },
+    {
+        "row": 4,
+        "col": 5,
+        "coordinates": null,
+        "consecutive_rows": 1,
+        "is_virtual": true
+    },
+    {
+        "row": 5,
+        "col": 0,
+        "coordinates": [
+            10,
+            399,
+            112,
+            459
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 5,
+        "col": 1,
+        "coordinates": [
+            112,
+            399,
+            200,
+            459
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 5,
+        "col": 2,
+        "coordinates": [
+            200,
+            399,
+            287,
+            459
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 5,
+        "col": 3,
+        "coordinates": [
+            287,
+            399,
+            375,
+            459
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 5,
+        "col": 4,
+        "coordinates": [
+            375,
+            399,
+            477,
+            459
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    },
+    {
+        "row": 5,
+        "col": 5,
+        "coordinates": [
+            477,
+            399,
+            565,
+            459
+        ],
+        "consecutive_rows": 1,
+        "is_virtual": false
+    }
+]

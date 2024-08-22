@@ -1,65 +1,34 @@
-from flask import Flask, request, jsonify
-import torch
-from transformers import ElectraForSequenceClassification, ElectraTokenizer
-import kss
-from flask import Response
+from flask import Flask, request
+from emotion.emotion_run import emotion_run
+from ocr.ocr_run import ocr_run
 import json
+import logging
+
+#ngrok.exe http sought-shrew-miserably.ngrok-free.app 5000
+#고정 도메인이 있다면 위 명령어 주소 변경해서 사용하기
+#없다면 ngrok.exe http 포트
+#하고 나온 주소를 넣기
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
-# 모델 로드
-model_path = "result/best_model"  # 학습된 모델 경로
-tokenizer = ElectraTokenizer.from_pretrained(model_path)
-model = ElectraForSequenceClassification.from_pretrained(model_path)
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model.to(device)
 
-id_to_emotion = {0: '불안', 1: '놀람/당황', 2: '분노', 3: '슬픔', 4: '행복'}
+# 로깅 설정
+logging.basicConfig(level=logging.DEBUG)
 
-def predict_emotion(text):
-    inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=128)
-    inputs = {k: v.to(device) for k, v in inputs.items()}
-    
-    with torch.no_grad():
-        outputs = model(**inputs)
-        logits = outputs.logits
-        predicted_class = torch.argmax(logits, dim=1).item()
-    
-    predicted_emotion = id_to_emotion[predicted_class]
-    confidence = torch.softmax(logits, dim=1)[0][predicted_class].item()
-    
-    return predicted_emotion, confidence
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    data = request.json
-    text = data['text']
-    print(text)
-    # 문장 분리
-    sentences = kss.split_sentences(text)
-    
-    results = []
-    for sentence in sentences:
-        emotion, confidence = predict_emotion(sentence)
-        results.append({
-            "sentence": sentence,
-            "emotion": emotion,
-            "confidence": confidence
-        })
-    
-    # 감정별 문장 수 계산
-    emotion_counts = {}
-    for result in results:
-        emotion = result['emotion']
-        emotion_counts[emotion] = emotion_counts.get(emotion, 0) + 1
-    print(results, emotion_counts, )
-    response_data = {
-    "sentences": results,
-    "emotion_counts": emotion_counts,
-    "total_sentences": len(sentences)
-}
-    return Response(json.dumps(response_data, ensure_ascii=False), 
-                mimetype='application/json')
+@app.route('/emotion', methods=['POST'])
+def emotion():
+    app.logger.info("OCR request received")
+    app.logger.debug(f"Request headers: {request.headers}")
+    app.logger.debug(f"Request JSON: {request.json}")
+    return emotion_run()
   
+@app.route('/ocr', methods=['POST'])
+def ocr():
+    app.logger.info("OCR request received")
+    app.logger.debug(f"Request headers: {request.headers}")
+    app.logger.debug(f"Request JSON: {request.json}")
+    response = ocr_run()
+    app.logger.info(f"OCR response: {response}")
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)

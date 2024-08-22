@@ -1,0 +1,53 @@
+# 이미지 처리 설정
+image_processing:
+  scale_factor: 2
+  denoise_h: 10
+  denoise_template_window_size: 7
+  denoise_search_window_size: 21
+
+# 선 검출 설정
+line_detection:
+  horizontal_kernel_size: [40, 1]
+  vertical_kernel_size: [1, 40]
+  min_line_length: 20
+
+# OCR 설정
+ocr:
+  language: 'korean'
+  use_gpu: true
+  use_angle_cls: false
+
+# 셀 추출 설정
+cell_extraction:
+  min_cell_width: 20
+  min_cell_height: 20
+  row_threshold: 20
+
+# 박스 그리기 설정
+box_drawing:
+  color: [0, 255, 0]  # RGB 형식
+  thickness: 2
+  font_size: 0.9
+  font_path: 'font/nanumgothic.ttf'
+
+# 출력 설정
+output:
+  json_filename: 'timetable_results.json'
+  image_filename: 'output/timetable_with_cells.png'
+  data_filename: 'output/timetable_data.json'
+  crop_filename: 'output/timetable_crop.png'
+  cells_dir: 'output/cells_dir'
+# 로깅 설정
+logging:
+  level: 'INFO'
+  format: '%(asctime)s - %(levelname)s - %(message)s'
+
+preprocess:
+  use_resize: true,
+  resize_factor: 1.5,
+  use_grayscale: true,
+  use_blur: true,
+  use_binary: true,
+  use_morph: true,
+  use_edges: false,
+  use_korean_preprocess: true
