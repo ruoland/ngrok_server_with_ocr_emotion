@@ -1,7 +1,7 @@
 import numpy as np
 from new_ocr.rdtdet_log import logger
 import math
-
+from datetime import datetime, timedelta
 from new_ocr.rdtdet_time_utils import process_time_column, extract_time_info, calculate_end_time
 from new_ocr.rdtdet_day_utils import process_day_row, get_day_of_week
 
@@ -33,7 +33,6 @@ def analyze_and_create_timetable(detected_objects, merged_ocr_results):
     
     logger.info(f"최종 시간표 구조: {len(timetable)}행 x {len(timetable[0]) if timetable else 0}열")
     return timetable, header_row, header_col
-
 def create_initial_timetable(rows, columns, detected_objects, merged_ocr_results):
     timetable = []
     for row_index, row in enumerate(rows):
@@ -60,7 +59,12 @@ def create_initial_timetable(rows, columns, detected_objects, merged_ocr_results
                 
                 logger.info(f"셀 정보 ({row_index+1}행 {col_index+1}열): {cell_info}")
             else:
-                cell_info = {'content': '', 'type': 'empty'}
+                cell_info = {
+                    'content': '',
+                    'type': 'empty',
+                    'row': row_index,
+                    'column': col_index
+                }
             
             row_content.append(cell_info)
         timetable.append(row_content)
@@ -69,7 +73,11 @@ def process_cell_info(timetable, rows):
     for i, row in enumerate(timetable):
         for j, cell in enumerate(row):
             if 'bbox' not in cell:
-                logger.warning(f"셀 ({i}, {j})에 bbox 정보가 없습니다. 건너뜁니다.")
+                logger.warning(f"셀 ({i}, {j})에 bbox 정보가 없습니다. 기본 정보만 설정합니다.")
+                cell['consecutive_classes'] = 1
+                cell['row_ratios'] = [1.0]
+                cell['start_time'] = ''
+                cell['end_time'] = ''
                 continue
 
             try:
@@ -77,7 +85,13 @@ def process_cell_info(timetable, rows):
                 
                 time_info = extract_time_info(cell['content'])
                 start_time = time_info if time_info else timetable[i][0].get('time', '')
-                end_time = calculate_cell_end_time(timetable, i, cell)
+                
+                # 시작 시간이 없으면 9시를 기준으로 설정
+                if not start_time:
+                    base_time = datetime.strptime("09:00", "%H:%M")
+                    start_time = (base_time + timedelta(hours=i)).strftime("%H:%M")
+                
+                end_time = calculate_cell_end_time(timetable, i, cell, start_time)
                 
                 cell['start_time'] = start_time
                 cell['end_time'] = end_time
@@ -86,7 +100,22 @@ def process_cell_info(timetable, rows):
                             f"행 비율 = {cell['row_ratios']}, 시작 시간 = {start_time}, 종료 시간 = {end_time}")
             except Exception as e:
                 logger.error(f"셀 ({i}, {j}) 처리 중 오류 발생: {str(e)}")
-
+def calculate_cell_end_time(timetable, start_row, cell, start_time):
+    if not start_time:
+        logger.warning(f"행 {start_row}에 시작 시간 정보가 없습니다.")
+        return ''
+    
+    start_datetime = datetime.strptime(start_time, "%H:%M")
+    total_minutes = sum(int(60 * ratio) for ratio in cell['row_ratios'])
+    
+    # 총 시간이 0분이면 최소 1분으로 설정
+    if total_minutes == 0:
+        total_minutes = 1
+    
+    end_datetime = start_datetime + timedelta(minutes=total_minutes)
+    
+    logger.info(f"셀 시간 계산: 시작 = {start_time}, 총 분 = {total_minutes}, 종료 = {end_datetime.strftime('%H:%M')}")
+    return end_datetime.strftime("%H:%M")
 
 def calculate_cell_span_and_ratios(cell, rows):
     cell_top = cell['bbox'][1]
@@ -116,27 +145,6 @@ def calculate_cell_span_and_ratios(cell, rows):
 
     logger.info(f"셀 span 계산: span = {span}, ratios = {ratios}")
     return span, ratios
-def calculate_cell_end_time(timetable, start_row, cell):
-    start_time = timetable[start_row][0].get('time', '')
-    if not start_time:
-        logger.warning(f"행 {start_row}에 시작 시간 정보가 없습니다.")
-        return ''
-    
-    start_hours, start_minutes = map(int, start_time.split(':'))
-    total_minutes = 0
-    
-    for ratio in cell['row_ratios']:
-        total_minutes += int(60 * ratio)
-    
-    # 총 시간이 0분이면 최소 1분으로 설정
-    if total_minutes == 0:
-        total_minutes = 1
-    
-    end_hours = (start_hours + total_minutes // 60) % 24
-    end_minutes = (start_minutes + total_minutes % 60) % 60
-    
-    logger.info(f"셀 시간 계산: 시작 = {start_time}, 총 분 = {total_minutes}, 종료 = {end_hours:02d}:{end_minutes:02d}")
-    return f"{end_hours:02d}:{end_minutes:02d}"
 
 
 def find_cell_in_bbox(detected_objects, bbox):

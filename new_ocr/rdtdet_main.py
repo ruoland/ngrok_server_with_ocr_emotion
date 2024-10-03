@@ -9,6 +9,7 @@ from rdtdet_io import save_cropped_images, save_json
 from rdtdet_process import process_image
 from rdtdet_analyze import analyze_and_create_timetable
 from rdtdet_display import display_results, print_merged_ocr_results
+from rdtdet_day_utils import get_day_of_week
 import uuid
 
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
@@ -60,7 +61,7 @@ if __name__ == "__main__":
             if cell['content']:
                 entry = {
                     "id": str(uuid.uuid4()),
-                    "day_of_week": timetable[0][j].get('day', ''),
+                    "day_of_week": cell.get('day', get_day_of_week(j)),  # 수정된 부분
                     "period": timetable[i][0].get('time', str(i)),
                     "start_time": cell.get('start_time', ''),
                     "end_time": cell.get('end_time', ''),
