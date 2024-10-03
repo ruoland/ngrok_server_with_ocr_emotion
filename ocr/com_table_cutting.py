@@ -8,10 +8,7 @@ import json
 from ocr.com_table_config import logger
 from requests import request
 
-def save_results_to_json(cell_contents, output_path):
-    with open(output_path, 'w', encoding='utf-8') as f:
-        json.dump(cell_contents, f, ensure_ascii=False, indent=4)
-    logger.info(f"결과가 {output_path}에 저장되었습니다.")
+
 def crop_cells(image_path, cells):
     logger.info("셀 자르기 시작")
     

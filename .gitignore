@@ -1,3 +1,13 @@
 
 *.png
 *.jpg
+new_ocr/__pycache__/
+new_ocr/__pycache__/ocr_run.cpython-312.pyc
+new_ocr/__pycache__/rdtdet_analyze.cpython-312.pyc
+new_ocr/__pycache__/rdtdet_day_utils.cpython-312.pyc
+new_ocr/__pycache__/rdtdet_display.cpython-312.pyc
+new_ocr/__pycache__/rdtdet_io.cpython-312.pyc
+new_ocr/__pycache__/rdtdet_log.cpython-312.pyc
+new_ocr/__pycache__/rdtdet_merge.cpython-312.pyc
+new_ocr/__pycache__/rdtdet_process.cpython-312.pyc
+new_ocr/__pycache__/rdtdet_time_utils.cpython-312.pyc

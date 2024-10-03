@@ -2,7 +2,7 @@ from transformers import ElectraForSequenceClassification, ElectraTokenizer
 import json
 import torch
 import kss
-from flask import Response
+from flask import Response, jsonify
 from flask import request
 model_path = "emotion/model"  # 학습된 모델 경로
 tokenizer = ElectraTokenizer.from_pretrained(model_path)
@@ -24,12 +24,12 @@ def predict_emotion(text):
     confidence = torch.softmax(logits, dim=1)[0][predicted_class].item()
     
     return predicted_emotion, confidence
+
 def emotion_run():
-    if request is None:
-        return
-    print(request, type(request))
-    data = request.json
-    text = data['text']
+    if not request.json or 'text' not in request.json:
+        return jsonify({"error": "Invalid input"}), 400
+    
+    text = request.json['text']
     print(text)
     # 문장 분리
     sentences = kss.split_sentences(text)
@@ -54,6 +54,5 @@ def emotion_run():
     "emotion_counts": emotion_counts,
     "total_sentences": len(sentences)
 }
-    return Response(json.dumps(response_data, ensure_ascii=False), 
-                mimetype='application/json')
+    return jsonify(response_data)
   
